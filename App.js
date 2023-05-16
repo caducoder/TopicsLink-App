@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { TopNewsStackScreen } from './Screens/TopNews';
+import { SearchNewsStackScreen } from './Screens/SearchNews';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{ headerShown: false }}
+      >
+        <Tab.Screen
+          name="Top Headlines"
+          component={TopNewsStackScreen}
+          options={{
+            tabBarLabel: 'Manchetes',
+            tabBarIcon: () => {
+              return <MaterialCommunityIcons name="newspaper-variant-multiple" size={24} color="black" />;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Outras Notícias"
+          component={SearchNewsStackScreen}
+          options={{
+            tabBarLabel: 'Buscar',
+            tabBarIcon: () => {
+              return <MaterialCommunityIcons name="filter-variant" size={24} color="black" />;
+            },
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
